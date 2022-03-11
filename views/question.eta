@@ -1,0 +1,42 @@
+<% layout("./layouts/layout.eta") %>
+
+
+<h1>Question: <%= it.question.question_text %></h1>
+<h2>Add answer</h2>
+<% if (it.errors && it.errors.length > 0) { %>
+<ul>
+  <% it.errors.forEach((error) => { %>
+    <li><%= error %></li>
+  <% }); %>
+</ul>
+<% } %>
+
+<form action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options" method="POST">
+    <input type="text" name="option_text" />
+    <p> Click on the box if the answer is correct </p> 
+    <input type="checkbox" name="is_correct" />
+    <input type="submit" value="Add" />
+ </form>
+
+<h2> Answers: </h2>
+
+ <ul>
+ <% it.answers.forEach(obj => { %>
+ <li>
+  <%= obj.option_text%> <%= obj.is_correct%>
+    <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options/<%= obj.id %>/delete">
+        <input type="submit" value ="Remove" />
+        </form>
+ </li>
+ <% }); %>
+</ul>
+
+<% if (it.answer && it.answer.length < 1) { %>
+<form action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/delete" method="POST">
+    <input type="submit" value="Delete question" />
+</form>
+<% } %>
+
+<h3> <a href = "/quiz"> Go to the quiz <a/></h3>
+
+<h3><a href = "/topics/<%= it.topic.id %>"> Go back </a></h3>

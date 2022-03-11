@@ -1,0 +1,30 @@
+<% layout("./layouts/layout.eta") %>
+
+
+<h1><%= it.topic.name%></h1>
+
+<% if (it.errors && it.errors.length > 0) { %>
+<ul>
+  <% it.errors.forEach((error) => { %>
+    <li><%= error %></li>
+  <% }); %>
+</ul>
+<% } %>
+
+<form action="/topics/<%= it.topic.id %>/questions" method="POST">
+    <input type="text" name="question_text" />
+    <input type="submit" value="Add question" />
+ </form>
+
+<h2> Existing questions </h2>
+
+<ul>
+<% it.questions.forEach(question => { %>
+<li>
+<a href = "/topics/<%= it.topic.id %>/questions/<%= question.id %>"><%= question.question_text %></a>
+</li>
+<% }); %>
+</ul>
+
+<h3><a href = "/topics"> Go back </a></h3>
+

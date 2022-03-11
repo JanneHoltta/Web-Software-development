@@ -1,0 +1,30 @@
+<% layout("./layouts/layout.eta") %>
+
+<% if (it.question && it. question.length < 1) { %>
+<h2>There are no questions for this topic :( </h2>
+<% if (it.errors && it.errors.length > 0) { %>
+<ul>
+  <% it.errors.forEach((error) => { %>
+    <li><%= error %></li>
+  <% }); %>
+</ul>
+<% } %>
+<% } %>
+<% else { %>
+<h1>Topic: <%= it.topic.name%></h2>
+
+<h2>Question: <%= it.question.question_text%></h2>
+
+<h3> Answers: </h3>
+
+ <ul>
+ <% it.answers.forEach(answer => { %>
+ <li>
+  <%= answer.option_text%> 
+    <form method="POST" action="/quiz/<%= it.topic.id %>/questions/<%= it.question.id %>/options/<%= answer.id %>">
+        <input type="submit" value ="Choose" />
+        </form>
+ </li>
+ <% }); %>
+</ul>
+<% } %>
